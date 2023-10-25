@@ -1,13 +1,28 @@
-// make an api call using useEffect
+import { useEffect, useState } from "react"
 
-export const APICall = () => {
+const APICall: React.FC = () => {
 
-    // Your code here!
+    const [todoText, setTodoText] = useState("");
+
+    const fetchResponse = async () => {
+        try {
+            const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+            const jsonplaceholder = await response.json();
+            setTodoText(jsonplaceholder.title);
+        } catch (err: any) {
+            alert(`Error occurred getting todo data: ${err.message}`);
+        }
+    }
+
+    useEffect(() => { fetchResponse() }, []);
+
 
     return (
         <>
             <h2>useEffect</h2>
-            <p>Your todo here!</p>
+            <p>{todoText}</p>
         </>
     )
 }
+
+export default APICall;
